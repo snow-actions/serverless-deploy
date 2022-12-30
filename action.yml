@@ -1,4 +1,4 @@
-name: Deploy Serverless
+name: Deploy Serverless Framework
 description: Deploy Serverless Framework
 inputs:
   role-to-assume:
