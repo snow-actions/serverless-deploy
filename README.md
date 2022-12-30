@@ -1,52 +1,32 @@
-[![Test](https://github.com/snow-actions/composite-action-template/actions/workflows/test.yml/badge.svg)](https://github.com/snow-actions/composite-action-template/actions/workflows/test.yml)
 
-# Create a Composite Action
+# Serverless Deploy
 
-Click the `Use this template` to bootstrap the creation of a [composite action](https://docs.github.com/en/actions/creating-actions/creating-a-composite-action).:rocket:
-
-This template includes tests, a validation workflow and versioning guidance.
-
-Learn how to use this template at [Wiki](https://github.com/snow-actions/composite-action-template/wiki).
+Deploy [Serverless Framework](https://www.serverless.com/framework/docs).
 
 ## Usage
 
-### Basic
+### AWS OpenID Connect (OIDC)
+
+Required to set up ID provider and create an role for [OIDC](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services).  
+Set the role ARN to `role-to-assume`.
 
 ```yml
+permissions:
+  id-token: write
+  contents: read
 steps:
-  - uses: snow-actions/composite-action-template@v1.0.0
-```
-
-### Optional
-
-```yml
-steps:
-  - uses: snow-actions/composite-action-template@v1.0.0
+  - uses: actions/checkout@v3
+  - uses: snow-actions/serverless-deploy/aws/oidc@v1.0.0
     with:
-      who-to-greet: Your name
+      role-to-assume: arn:aws:iam::123456789100:role/my-github-actions-role
+      aws-region: us-east-2
 ```
 
-## Environment variables
+See other options at [aws/oidc/action.yml](aws/oidc/action.yml)
 
-| Name | Description | Default | Required |
-| - | - | - | - |
-| `WHO_TO_GREET` | Who to greet | `World` | no |
+### AWS Access Key
 
-## Inputs
-
-See [action.yml](action.yml)
-
-| Name | Description | Default | Required |
-| - | - | - | - |
-| `who-to-greet` | Who to greet | `World` | yes |
-
-## Outputs
-
-See [action.yml](action.yml)
-
-| Name | Description |
-| - | - |
-| `greet` | The word we greeted you |
+Not implemented.
 
 ## Supported
 
@@ -60,16 +40,12 @@ See [action.yml](action.yml)
 ### Events
 
 - Any
-<!--
-- `push`
-- `pull_request`
--->
 
 ## Dependencies
 
 - Bash
-- [actions/cache](https://github.com/actions/cache) >= 3.0.0
-- [GitHub CLI](https://cli.github.com/) >= 2.6.0
+- [aws-actions/configure-aws-credentials](https://github.com/aws-actions/configure-aws-credentials)
+- [serverless - npm](https://www.npmjs.com/package/serverless)
 
 ## Contributing
 
