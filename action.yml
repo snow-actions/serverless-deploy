@@ -1,0 +1,29 @@
+name: Serverless Deploy
+description: Deploy Serverless Framework
+inputs:
+  role-to-assume:
+    description: Role ARN as same as aws-actions/configure-aws-credentials
+    required: true
+  aws-region:
+    description: Region as same as aws-actions/configure-aws-credentials
+    required: true
+  args:
+    description: serverless command args
+    required: false
+    default: deploy --verbose
+  working-directory:
+    description: Working directory
+    required: false
+    default: .
+branding:
+  icon: upload-cloud
+  color: orange
+runs:
+  using: composite
+  steps:
+    - uses: ./aws/oidc
+      with:
+        role-to-assume: ${{ inputs.role-to-assume }}
+        aws-region: ${{ inputs.aws-region }}
+        args: ${{ inputs.args }}
+        working-directory: ${{ inputs.working-directory }}
