@@ -21,7 +21,7 @@ branding:
 runs:
   using: composite
   steps:
-    - uses: ./aws/oidc
+    - uses: snow-actions/serverless-deploy/aws/oidc@v1.0.0
       with:
         role-to-assume: ${{ inputs.role-to-assume }}
         aws-region: ${{ inputs.aws-region }}
